@@ -1,0 +1,58 @@
+﻿@page "/"
+
+@inject HttpClient Http
+@inject IConfiguration Configuration
+
+<PageTitle>Pokedex</PageTitle>
+
+<h1 class="mt-4">Pokemon Search</h1>
+@*<p>Fill in the fields to search</p>*@
+<hr />
+
+<EditForm Model="@request" OnValidSubmit="@OnSubmit">
+    @*<DataAnnotationsValidator />*@
+
+    <div class="row mb-3">
+        <h4>@message</h4>
+    </div>
+
+    <div class="row mb-3">
+
+        <div class="col-md-6">
+            <label>Nome do Pokemon:</label>
+            <InputText class="form-control" @bind-Value="request.Name" />
+            <span class="text-danger">
+                <ValidationMessage For="@(() => request.Name)" />
+            </span>
+        </div>
+
+        @*<div class="col-md-6">
+            <label>ID do Pokemon:</label>
+            <InputText class="form-control" @bind-Value="request.Name" />
+            <span class="text-danger">
+                <ValidationMessage For="@(() => request.Name)" />
+            </span>
+        </div>*@
+
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <input type="submit" class="btn btn-primary" value="Search Pokemon" />
+        </div>
+    </div>
+
+</EditForm>
+
+@code {
+    private SearchRequest request = new SearchRequest();
+
+    private string message;
+
+    private async Task OnSubmit()
+    {
+        message = string.Empty;
+
+
+    }
+}

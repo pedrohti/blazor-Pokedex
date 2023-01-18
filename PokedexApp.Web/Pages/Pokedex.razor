@@ -1,0 +1,32 @@
+﻿@page "/pokedex"
+
+<h3>Pokedex</h3>
+
+@inject HttpClient Http
+@inject IConfiguration Configuration
+
+@foreach (var item in pokemons)
+{
+    <div class="mb-2">
+        <PokemonData 
+            @*Foto="@(Configuration["ImgProdutos"] + item.Front)" *@
+            Nome="@item.Name"
+            Id="@item.Id"
+            BaseExperience="@item.BaseExperience"
+            Height="@item.Height"
+            Weight="@item.Weight"
+            Order="@item.Order"
+            />
+    </div>
+}
+
+@code {
+    List<SearchResponse> pokemons = new List<SearchResponse>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Http.GetAsync(Configuration["BasePokeAPI"] + "pokemon/" + 4);
+        pokemons = await response.Content.ReadFromJsonAsync<List<SearchResponse>>();
+    }
+
+}
